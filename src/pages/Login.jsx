@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { loginApi } from "../api/authApi";
 import { useAuth } from "../auth/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -9,9 +9,14 @@ function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { login } = useAuth();
+  const { login,token } = useAuth();
   const navigate = useNavigate();
 
+useEffect(() => {
+  if (token) {
+    navigate("/dashboard");
+  }
+}, [token]);
   const handleLogin = async () => {
     try {
       setLoading(true);
