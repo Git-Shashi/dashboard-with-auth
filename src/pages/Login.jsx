@@ -1,8 +1,30 @@
 import { useState } from "react";
+import { loginApi } from "../api/authApi";
+import { useAuth } from "../auth/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    try {
+      setLoading(true);
+      setError("");
+      const res = await loginApi(email, password);
+      login(res.token, res.expiresIn);
+      navigate("/dashboard");
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div style={{ maxWidth: 400, margin: "100px auto", textAlign: "center" }}>
@@ -13,7 +35,6 @@ function Login() {
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        style={{ width: "100%", padding: 10, marginBottom: 10 }}
       />
 
       <input
@@ -21,12 +42,13 @@ function Login() {
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        style={{ width: "100%", padding: 10, marginBottom: 20 }}
       />
 
-      <button style={{ width: "100%", padding: 10 }}>
-        Login
+      <button onClick={handleLogin} disabled={loading}>
+        {loading ? "Logging in..." : "Login"}
       </button>
+
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 }
