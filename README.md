@@ -1,16 +1,140 @@
-# React + Vite
+# Dashboard with Authentication
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Live Demo:  
+https://vercel.com/shashi-bhushans-projects-a86cb416/dashboard-with-auth
 
-Currently, two official plugins are available:
+This project is a production-style React application that demonstrates how real frontend systems handle authentication, protected routes, API calls, and user sessions.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+It was built as part of an **API Integration & Authentication** assignment to simulate how a modern frontend interacts with backend services.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## What this app does
 
-## Expanding the ESLint configuration
+The application has two main screens:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Login Page**  
+  Users enter their email and password to sign in.
+
+- **Dashboard**  
+  A protected page that is accessible only after login.  
+  It fetches and displays data from a public API.
+
+The user can log out at any time, which clears the session and returns them to the login screen.
+
+---
+
+## Demo Login Credentials
+
+Use the following credentials to test the app:
+
+```
+Email: admin@test.com  
+Password: 1234
+```
+
+---
+
+## Authentication Flow
+
+This project uses **mocked authentication** to simulate a real backend.
+
+When the user logs in:
+- A fake token is generated
+- The token and expiry time are stored in `localStorage`
+- The user is redirected to the dashboard
+
+If the token expires or is removed, the user is automatically logged out and redirected to the login page.
+
+---
+
+## Routing & Protection
+
+- `/login` → Public login page  
+- `/dashboard` → Protected dashboard  
+
+If an unauthenticated user tries to access `/dashboard`, they are redirected to `/login`.
+
+This simulates how real applications protect private routes.
+
+---
+
+## Dashboard & API
+
+The dashboard fetches data from:
+
+```
+https://jsonplaceholder.typicode.com/posts
+```
+
+Features:
+- Loading indicator while data is fetched  
+- Error message if the API fails  
+- Retry button to re-fetch data  
+
+---
+
+## Project Structure
+
+```
+src/
+ ├── api/
+ │    ├── authApi.js       # Mock login logic
+ │    ├── axios.js        # Axios instance + interceptor
+ │    └── dataApi.js      # Dashboard API calls
+ ├── auth/
+ │    ├── AuthContext.jsx # Global authentication state
+ │    └── ProtectedRoute.jsx
+ ├── pages/
+ │    ├── Login.jsx
+ │    └── Dashboard.jsx
+ ├── Router.jsx          # Application routes
+ ├── main.jsx            # App bootstrap
+```
+
+The code is organized to keep:
+- API logic
+- Authentication
+- UI pages  
+clearly separated.
+
+---
+
+## Tech Stack
+
+- React (Vite)
+- React Router
+- Context API
+- Axios (with request interceptor)
+- Local Storage
+
+---
+
+## Bonus Features Implemented
+
+- Token-based authentication
+- Token expiry handling
+- Axios request interceptor for auth tokens
+- Protected routes
+- Retry handling for failed API calls
+
+---
+
+## Run Locally
+
+```bash
+npm install
+npm run dev
+```
+
+Then open:
+
+```
+http://localhost:5173
+```
+
+---
+
+## Author
+
+Shashi Bhushan Kumar
