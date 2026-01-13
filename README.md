@@ -29,7 +29,7 @@ The user can log out at any time, which clears the session and returns them to t
 Use the following credentials to test the app:
 
 ```
-Email: admin@test.com  
+Email: shashi@test.com  
 Password: 1234
 ```
 
