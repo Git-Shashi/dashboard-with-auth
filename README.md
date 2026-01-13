@@ -1,7 +1,7 @@
 # Dashboard with Authentication
 
 Live Demo:  
-(https://dashboard-with-auth-ruddy.vercel.app/dashboard)
+(https://dashboard-with-auth-ruddy.vercel.app)
 
 This project is a production-style React application that demonstrates how real frontend systems handle authentication, protected routes, API calls, and user sessions.
 
